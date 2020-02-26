@@ -9,6 +9,7 @@
 */
 
 package cse360assign2;
+import java.util.Arrays;
 /*
  * 
  */
@@ -30,8 +31,21 @@ public class SimpleList {
 	 */
 	public void add(int element) {
 		// Out of bounds -> decrement 
-		if (count == 10) 
-			count--;
+		// ASSIGN2: If the array is FULL, add half the size
+		// Calculate 50% of the list length and round down
+		// Copy the original list into the new with 50% space added
+		if (count == list.length) {
+			// New size is original + 50% of the length 
+			int newsize;
+			if (list.length == 0)
+				newsize = 1;
+			if (list.length == 1) 
+				newsize = 2;
+			else
+				newsize = list.length + (int) Math.floor(list.length / 2);
+			list = Arrays.copyOf(list, newsize);
+			// count--;
+		}
 		for (int index = count - 1; index >= 0; index--) {
 			list[index + 1] = list[index];
 		}
@@ -64,6 +78,18 @@ public class SimpleList {
 			list[count - 1] = 0;
 			count --;
 		}
+		
+		// ASSIGN2
+		// If the list has more than 25% empty spaces, decrease the size of the list
+//		if(count == 0) {
+//			list = {};
+//		}
+		
+		
+		while(count < list.length * 0.25 & list.length > 1) {
+			list = Arrays.copyOf(list, list.length - 1);
+		}
+		
 	}
 	
 	/*
